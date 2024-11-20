@@ -13,6 +13,19 @@ darker brightness values the control step gets smaller and smaller.
 It's perfect for us creatures of the night watching rust streams in complete
 darkness at 1AM as it allows us to make the laptop screen *really* dark.
 
+## Usage
+
+```
+loglux OPERATION [-p|--path (default: /sys/class/backlight)] [-n|--num-steps (default: 75)]
+```
+
+* `OPERATION` is either `up` or `down`
+* `--path` can be either a start directory containing multiple controllers, or a path to specific controller.
+  In the directory case, the controller with the highest `max_brightness` setting will be selected.
+* `--num-steps` is the only tunable parameter and it specifies the total number of steps for the
+  adjustment scale. The default is tuned for steps of 9-10% near the maximum, then they'll get smaller
+  and smaller as we approach the minimum.
+
 ## Installation
 
 Binaries for Linux on various architectures are available on the [releases][releases] page.
@@ -48,19 +61,6 @@ They are statically linked against [musl][musl] to completely reduce runtime dep
 > ```
 > sudo udevadm control --reload-rules && sudo udevadm trigger
 > ```
-
-## Usage
-
-```
-loglux OPERATION [-p|--path (default: /sys/class/backlight)] [-n|--num-steps (default: 75)]
-```
-
-* `OPERATION` is either `up` or `down`
-* `--path` can be either a start directory containing multiple controllers, or a path to specific controller.
-  In the directory case, the controller with the highest `max_brightness` setting will be selected.
-* `--num-steps` is the only tunable parameter and it specifies the total number of steps for the
-  adjustment scale. The default is tuned for steps of 9-10% near the maximum, then they'll get smaller
-  and smaller as we approach the minimum.
 
 [lux]: https://github.com/Ventto/lux
 
