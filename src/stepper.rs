@@ -72,6 +72,19 @@ where
     }
 }
 
+// Quickcheck-based test suite that verifies the following properties:
+//
+// 1. The brightness after `step_up()` is *always* greater than or equal to the old brightness.
+//
+// 2. The brightness after `step_down()` is *always* less than or equal to the old brightness.
+//
+// 3. Walking the entire scale from 0 to max with `step_up()` results in *precisely*
+// the same number of steps AND the same step values as walking the entire scale
+// from max to 0 with `step_down()`.
+//
+// This offers sufficient proof that the resulting scale is completely determined
+// by just the max value and the number of steps, and thus we don't need to pre-compute it
+// for correctness.
 #[cfg(test)]
 mod tests {
     use std::collections::HashSet;

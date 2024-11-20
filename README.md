@@ -20,11 +20,12 @@ loglux OPERATION [-p|--path (default: /sys/class/backlight)] [-n|--num-steps (de
 ```
 
 * `OPERATION` is either `up` or `down`
-* `--path` can be either a start directory containing multiple controllers, or a path to specific controller.
+* `--path` can be either a start directory containing multiple controllers, or a path to specific
+  controller.
   In the directory case, the controller with the highest `max_brightness` setting will be selected.
 * `--num-steps` is the only tunable parameter and it specifies the total number of steps for the
-  adjustment scale. The default is tuned for steps of 9-10% near the maximum, then they'll get smaller
-  and smaller as we approach the minimum.
+  adjustment scale. The default is tuned for steps of 9-10% near the maximum, then they'll get
+  smaller and smaller as we approach the minimum.
 
 ## Installation
 
@@ -32,7 +33,7 @@ Binaries for Linux on various architectures are available on the [releases][rele
 
 They are statically linked against [musl][musl] to completely reduce runtime dependencies.
 
-> [!NOTE] 
+> [!NOTE]
 > Your user _must_ have write rights for the `/sys/class/backlight/.../brightness`
 > file you're planning to use.
 >
@@ -42,7 +43,7 @@ They are statically linked against [musl][musl] to completely reduce runtime dep
 > If that's the case, simply add your user to the `video` group: `sudo usermod -aG video $USER`
 >
 > For a more involved solution using `udev` you could first add your user to the `wheel` group:
-> 
+>
 > ```
 > sudo usermod -aG wheel $USER
 > ```
@@ -56,7 +57,7 @@ They are statically linked against [musl][musl] to completely reduce runtime dep
 > EOF
 > ```
 >
-> Finally, trigger udev: 
+> Finally, trigger udev:
 >
 > ```
 > sudo udevadm control --reload-rules && sudo udevadm trigger

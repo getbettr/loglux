@@ -1,3 +1,5 @@
+// To keep our dependency footprint as small as possible we chose not to
+// use 'clap' and instead write a manual parser based on 'lexopt'.
 use std::path::PathBuf;
 
 use lexopt::{prelude::*, Error};
@@ -9,12 +11,24 @@ pub enum Mode {
 }
 
 pub struct Opts {
+    // 'up' or 'down'
     pub mode: Mode,
+
+    // Can be either the full path to a controller or the path to a directory
+    // containing multiple controllers as sub-directories.
+    // In the latter case the "best" controller is chosen as the one that
+    // has the maximum 'max_brightness' value.
     pub start_path: PathBuf,
+
+    // Total number of steps.
     pub num_steps: u64,
 }
 
+// This is tuned to specifically get 9-10% steps near the range maximum
+// and really low values near the minimum.
 const DEFAULT_NUM_STEPS: u64 = 75;
+
+// For most linux systems, this is where backlight controllers live.
 const DEFAULT_PATH: &str = "/sys/class/backlight";
 
 pub fn help() {

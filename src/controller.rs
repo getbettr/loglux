@@ -31,6 +31,8 @@ impl<'p> Controller<'p> {
     pub fn from_opts(opts: &'p Opts) -> Option<Self> {
         let mut path = Cow::Borrowed(&opts.start_path);
 
+        // We've been passed the path to a specific controller
+        // => read the 'max_brightness' and 'brightness' values and return it.
         if let (Some(max_brightness), Some(brightness)) = (
             val_from_file(opts.start_path.join("max_brightness")),
             val_from_file(opts.start_path.join("brightness")),
@@ -47,6 +49,8 @@ impl<'p> Controller<'p> {
         let mut found = false;
         let start_path = path.to_mut();
 
+        // Try to recurse into 'start_path' and pick the controller with the
+        // maximum 'max_brightness' value.
         for entry in read_dir(&opts.start_path).ok()?.flatten() {
             let c_path = entry.path();
             if let Some(max_b) = val_from_file(c_path.join("max_brightness")) {
