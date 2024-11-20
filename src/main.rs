@@ -47,6 +47,12 @@ pub fn main() -> LuxRes<()> {
         if UnixListener::bind_addr(&s).is_ok() {
             controller.notify(new_brightness)?;
         }
+    } else {
+        eprintln!(
+            "could not write to {}; please make sure your user \
+            is in the 'video' group and/or set up udev rules to allow writes.",
+            controller.brightness_path().display()
+        )
     }
 
     Ok(())

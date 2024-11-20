@@ -1,10 +1,10 @@
 use std::{
     borrow::Cow,
-    fs::{read_dir, File},
+    fs::{read_dir, File, OpenOptions},
     io::{Result as IoResult, Write},
     os::unix::fs::FileExt,
     path::{Path, PathBuf},
-    process::{Command, Output, Stdio},
+    process::{Command, Output},
     str,
 };
 
@@ -70,21 +70,12 @@ impl<'p> Controller<'p> {
         None
     }
 
+    pub fn brightness_path(&self) -> PathBuf { self.path.join("brightness") }
+
     pub fn set_brightness(&self, new_b: u64) -> LuxRes<()> {
-        let mut tee = Command::new("sudo")
-            .arg("tee")
-            .arg(self.path.join("brightness"))
-            .stdin(Stdio::piped())
-            .stdout(Stdio::null())
-            .stderr(Stdio::piped())
-            .spawn()?;
+        let mut file = OpenOptions::new().write(true).open(self.brightness_path())?;
 
-        {
-            let mut stdin = tee.stdin.take().ok_or("could not capture tee's stdin")?;
-            stdin.write_all(format!("{}", new_b).as_bytes())?;
-        }
-
-        cmd_result("tee", tee.wait_with_output())
+        file.write_all(format!("{}", new_b).as_bytes()).map_err(|e| e.into())
     }
 
     pub fn notify(&self, new_b: u64) -> LuxRes<()> {

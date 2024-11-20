@@ -10,7 +10,7 @@ While heavily inspired by the original [lux][lux], it differs from it in one maj
 The brightness control is [logarithmic][weber-fechner] - as we approach darker and
 darker brightness values the control step gets smaller and smaller.
 
-It's perfect for us creatures of the night who get to sleep watching rust streams in complete
+It's perfect for us creatures of the night watching rust streams in complete
 darkness at 1AM as it allows us to make the laptop screen *really* dark.
 
 ## Installation
@@ -18,6 +18,35 @@ darkness at 1AM as it allows us to make the laptop screen *really* dark.
 Binaries for Linux on various architectures are available on the [releases][releases] page.
 
 They are statically linked against [musl][musl] to completely reduce runtime dependencies.
+
+> [!NOTE] Your user _must_ have write rights for the `/sys/class/backlight/.../brightness`
+> file you're planning to use.
+>
+> Your best bet is to do a `ls -a /sys/class/backlight/*/brightness` and check if
+> it's owned by the `video` group and if the group has write rights.
+>
+> If that's the case, simply add your user to the `video` group: `sudo usermod -aG video $USER`
+>
+> For a more involved solution using `udev` you could first add your user to the `wheel` group:
+> 
+> ```
+> sudo usermod -aG wheel $USER
+> ```
+>
+> Then define the udev rules to ensure the brightness file is writeable:
+>
+> ```
+> sudo tee /etc/udev/rules.d/99-loglux.rules <<EOF
+> RUN+="/bin/chgrp wheel /sys/class/backlight/intel_backlight/brightness"
+> RUN+="/bin/chmod g+w /sys/class/backlight/intel_backlight/brightness"
+> EOF
+> ```
+>
+> Finally, trigger udev: 
+>
+> ```
+> sudo udevadm control --reload-rules && sudo udevadm trigger
+> ```
 
 ## Usage
 
