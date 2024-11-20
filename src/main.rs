@@ -42,10 +42,12 @@ pub fn main() -> LuxRes<()> {
     }
 
     if controller.set_brightness(new_brightness).is_ok() {
-        // process-level lock the notifications so we don't spam
-        let s = SocketAddr::from_abstract_name("loglux_lock".as_bytes())?;
-        if UnixListener::bind_addr(&s).is_ok() {
-            controller.notify(new_brightness)?;
+        if !opts.no_notify {
+            // process-level lock the notifications so we don't spam
+            let socker_addr = SocketAddr::from_abstract_name("loglux_lock".as_bytes())?;
+            if UnixListener::bind_addr(&socker_addr).is_ok() {
+                controller.notify(new_brightness)?;
+            }
         }
     } else {
         eprintln!(

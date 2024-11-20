@@ -16,7 +16,7 @@ darkness at 1AM as it allows us to make the laptop screen *really* dark.
 ## Usage
 
 ```
-loglux OPERATION [-p|--path (default: /sys/class/backlight)] [-n|--num-steps (default: 75)]
+loglux OPERATION [-p|--path (default: /sys/class/backlight)] [-n|--num-steps (default: 75)] [--no-notify]
 ```
 
 * `OPERATION` is either `up` or `down`
@@ -26,6 +26,7 @@ loglux OPERATION [-p|--path (default: /sys/class/backlight)] [-n|--num-steps (de
 * `--num-steps` is the only tunable parameter and it specifies the total number of steps for the
   adjustment scale. The default is tuned for steps of 9-10% near the maximum, then they'll get
   smaller and smaller as we approach the minimum.
+* `--no-notify` skips the notification of the new value via `notify-send`.
 
 ## Installation
 

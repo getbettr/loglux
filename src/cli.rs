@@ -22,6 +22,9 @@ pub struct Opts {
 
     // Total number of steps.
     pub num_steps: u64,
+
+    // Whether to skip the notification via 'notify-send'
+    pub no_notify: bool,
 }
 
 // This is tuned to specifically get 9-10% steps near the range maximum
@@ -33,7 +36,7 @@ const DEFAULT_PATH: &str = "/sys/class/backlight";
 
 pub fn help() {
     println!(
-        r#"Usage: loglux up|down [-p|--path (default: {})] [-n|--num-steps (default: {:.0})]"#,
+        r#"Usage: loglux up|down [-p|--path (default: {})] [-n|--num-steps (default: {:.0})] [--no-notify]"#,
         DEFAULT_PATH, DEFAULT_NUM_STEPS
     );
     std::process::exit(0);
@@ -43,6 +46,7 @@ pub fn parse_opts() -> Result<Opts, Error> {
     let mut mode = Err(Error::from("missing mode"));
     let mut start_path = Ok(PathBuf::from(DEFAULT_PATH));
     let mut num_steps = Ok(DEFAULT_NUM_STEPS);
+    let mut no_notify: Result<bool, Error> = Ok(false);
 
     let mut parser = lexopt::Parser::from_env();
     while let Some(arg) = parser.next()? {
@@ -65,9 +69,10 @@ pub fn parse_opts() -> Result<Opts, Error> {
                         .map_err(|e| Error::from(format!("invalid number of steps: {e}")))
                 });
             }
+            Long("no-notify") => no_notify = Ok(true),
             Short('h') | Long("help") => help(),
             _ => return Err(arg.unexpected()),
         }
     }
-    Ok(Opts { mode: mode?, start_path: start_path?, num_steps: num_steps? })
+    Ok(Opts { mode: mode?, start_path: start_path?, num_steps: num_steps?, no_notify: no_notify? })
 }
