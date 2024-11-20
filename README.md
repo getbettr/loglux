@@ -19,7 +19,8 @@ Binaries for Linux on various architectures are available on the [releases][rele
 
 They are statically linked against [musl][musl] to completely reduce runtime dependencies.
 
-> [!NOTE] Your user _must_ have write rights for the `/sys/class/backlight/.../brightness`
+> [!NOTE] 
+> Your user _must_ have write rights for the `/sys/class/backlight/.../brightness`
 > file you're planning to use.
 >
 > Your best bet is to do a `ls -a /sys/class/backlight/*/brightness` and check if
