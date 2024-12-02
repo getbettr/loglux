@@ -11,7 +11,7 @@ __dind_orb: &dind
       path: /var/run
 
 __rust_orb: &rust
-  image: hub.getbetter.ro/orbs/rust:blue
+  image: hub.getbetter.ro/orbs/rust:green
   pull: always
   volumes:
     - name: dockersock
