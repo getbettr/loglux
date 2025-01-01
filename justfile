@@ -15,7 +15,7 @@ release type=DEFAULT_RELEASE:
   #!/usr/bin/env bash
   cargo release version {{type}} -x --no-confirm
   cargo release commit -x --no-confirm
-  cargo release -x --no-confirm || {
+  cargo release -x --no-confirm --no-push || {
     echo -e "Release failed, removing latest tag and rewinding to HEAD~1..."
     git tag --delete $(git tag -l | sort -r | head -n 1)
     git reset --hard HEAD~1
