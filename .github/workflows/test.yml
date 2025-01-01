@@ -18,8 +18,7 @@ jobs:
       - name: Install rust
         shell: bash
         run: |
-          RUST_VERSION="$(grep -oP 'channel = "\K[^"]+' rust-toolchain.toml)"
-          rustup toolchain install $RUST_VERSION --profile minimal
+          rustup toolchain install stable --profile minimal
       - uses: extractions/setup-just@v2
       - name: Cache sccache
         id: cache_sccache
