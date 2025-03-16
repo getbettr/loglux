@@ -19,7 +19,7 @@ jobs:
         shell: bash
         run: |
           rustup toolchain install stable --profile minimal
-      - uses: extractions/setup-just@v2
+      - uses: extractions/setup-just@v3
       - name: Cache sccache
         id: cache_sccache
         uses: actions/cache@v4
