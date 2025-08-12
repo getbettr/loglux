@@ -15,7 +15,7 @@ jobs:
     name: get-version
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Grab the version from Cargo.toml
         shell: bash
         run: |
@@ -28,7 +28,7 @@ jobs:
     name: smoke-test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Install rust
         shell: bash
         run: |
@@ -85,7 +85,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Cache sccache
         id: cache_sccache
@@ -169,7 +169,7 @@ jobs:
     needs: [ "build-binaries", "get-version" ]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Promote release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
