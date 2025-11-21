@@ -15,7 +15,7 @@ jobs:
     name: trigger-cron-ci
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
         with:
           token: ${{ secrets.CI_TOKEN }}
       - name: Push a special commit to the CI branch
