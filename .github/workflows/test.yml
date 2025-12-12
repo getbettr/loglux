@@ -22,7 +22,7 @@ jobs:
       - uses: extractions/setup-just@v3
       - name: Cache sccache
         id: cache_sccache
-        uses: actions/cache@v4
+        uses: actions/cache@v5
         with:
           path: /home/runner/.cache/sccache
           key: test-sccache-v0-${{ hashFiles('Cargo.lock') }}
