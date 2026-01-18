@@ -14,7 +14,7 @@ const BUFFER_SIZE: usize = 32;
 
 #[derive(Clone)]
 pub struct Controller<'p> {
-    pub path: Cow<'p, PathBuf>,
+    pub path: Cow<'p, Path>,
     max_brightness: u64,
     brightness: u64,
     num_steps: u64,
@@ -29,7 +29,7 @@ impl Bounded for Controller<'_> {
 
 impl<'p> Controller<'p> {
     pub fn from_opts(opts: &'p Opts) -> Option<Self> {
-        let mut path = Cow::Borrowed(&opts.start_path);
+        let mut path = Cow::Borrowed(opts.start_path.as_path());
 
         // We've been passed the path to a specific controller
         // => read the 'max_brightness' and 'brightness' values and return it.
