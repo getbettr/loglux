@@ -2,7 +2,7 @@
 name = "loglux"
 description = "Et lux fut"
 authors = ["Rareș <rares@getbetter.ro>"]
-version = "1.0.8"
+version = "1.0.9"
 edition = "2021"
 
 [dependencies]
